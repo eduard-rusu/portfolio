@@ -1,0 +1,34 @@
+import { useState } from "react"
+
+function ContactUsForm() {
+    const [name, setName] = useState<string>("")
+
+    const handleOnSubmit = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+        e.preventDefault()
+    }
+
+    const handleOnNameChange = () => {
+        let timeout: number;
+
+        return (e: any) => {
+            if (timeout) {
+                clearTimeout(timeout)
+            }
+            timeout = setTimeout(() => {
+                setName(e.target.value)
+            }, 200)
+        }
+    }
+
+    return (
+        <form>
+            <label>
+                Name:
+                <input type="text" name="Name" onChange={handleOnNameChange()}/>
+            </label>
+            <input type="submit" onClick={handleOnSubmit}/>
+        </form>
+    )
+}
+
+export default ContactUsForm
