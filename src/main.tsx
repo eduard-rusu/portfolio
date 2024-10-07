@@ -7,8 +7,6 @@ import ContactUsForm from './components/ContactUsForm.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Navbar></Navbar>
     <App />
-    <ContactUsForm></ContactUsForm>
   </StrictMode>,
 )

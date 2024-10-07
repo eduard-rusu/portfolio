@@ -1,34 +1,53 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Navbar from './components/Navbar'
+import ContactUsForm from './components/ContactUsForm'
+import HomePage from './components/HomePage'
+import ServicesPage from './components/ServicesPage'
+import { useEffect, useState } from 'react'
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
+
+function ScrollWatcher() {
+  const navigate = useNavigate();
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  const handleScroll = () => {
+    const currentScrollPos = window.scrollY;
+    const viewportHeight = window.innerHeight;
+    const scrolledVh = currentScrollPos / viewportHeight;
+
+    if (scrolledVh < 1 && window.location.pathname !== '/') {
+        navigate('/');
+    } else if (scrolledVh >= 1 && scrolledVh < 2 && window.location.pathname !== '/section1') {
+        navigate('/Services');
+    } else if (scrolledVh >= 2) {
+        navigate('/section2');
+    }
+
+  }
+  
+  useEffect(() => {
+    console.log("TEST")
+    window.addEventListener('scroll', handleScroll)
+  })
+
+  // useEffect(() => {
+  //   console.log("MOUNT")
+  //   return () => console.log("UNMOUNT")
+  // }, [navigate]);
+
+  return null
+}
+
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
+    <BrowserRouter>
+      <ScrollWatcher/>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <HomePage/>
+        <ServicesPage/>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </BrowserRouter>
   )
 }
 
