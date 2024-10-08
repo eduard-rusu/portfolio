@@ -1,7 +1,9 @@
 .navbar {
   background-color: teal;
   width: 100%;
-  height: 10%;
+  max-height: 5%;
+  position: fixed;
+  top: 0;
 }
 
 .homepage {
@@ -12,4 +14,14 @@
 .servicespage {
   height: 100vh;
   background-color: aquamarine;
+}
+
+.contactuspage {
+  height: 100vh;
+  background-color: rgb(87, 168, 249);
+}
+
+.aboutmepage {
+  height: 100vh;
+  background-color: rgb(116, 246, 164);
 }

@@ -23,8 +23,20 @@ function ContactUsForm() {
     return (
         <form>
             <label>
-                Name:
-                <input type="text" name="Name" onChange={handleOnNameChange()}/>
+                First Name:
+                <input type="text" name="First Name" onChange={handleOnNameChange()}/>
+            </label>
+            <label>
+                Last Name:
+                <input type="text" name="Last Name" onChange={handleOnNameChange()}/>
+            </label>
+            <label>
+                Email:
+                <input type="text" name="Email" onChange={handleOnNameChange()}/>
+            </label>
+            <label>
+                Message:
+                <input type="text" name="Message" onChange={handleOnNameChange()}/>
             </label>
             <input type="submit" onClick={handleOnSubmit}/>
         </form>

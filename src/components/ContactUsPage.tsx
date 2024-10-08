@@ -1,6 +1,10 @@
+import ContactUsForm from "./ContactUsForm"
+
 function ContactUsPage() {
     return (
-        <div></div>
+        <div className="contactuspage">
+            <ContactUsForm/>
+        </div>
     )
 }
 

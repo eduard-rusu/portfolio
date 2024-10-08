@@ -1,6 +1,6 @@
 function AboutMePage() {
     return (
-        <div></div>
+        <div className="aboutmepage"></div>
     )
 }
 
