@@ -19,6 +19,13 @@
    force_destroy = true
  }
 
+ resource "aws_s3_bucket_ownership_controls" "app" {
+  bucket = aws_s3_bucket.app.id
+  rule {
+    object_ownership = "ObjectWriter"
+  }
+}
+
  resource "aws_s3_bucket_object" "app" {
    acl          = "public-read"
    key          = "index.html"
