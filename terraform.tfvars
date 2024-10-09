@@ -1,3 +1,3 @@
 region = "eu-north-1"
-label  = "hashicorp.fun"
+label  = "h"
 app    = "personal_website"
