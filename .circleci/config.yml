@@ -5,6 +5,7 @@ version: 2
 
 jobs:
   build:
+    working_directory: /tmp/project
     docker:
       - image: cimg/node:22.9.0
     steps:
@@ -24,7 +25,6 @@ jobs:
             - .
 
   plan-apply:
-    working_directory: /tmp/project
     docker:
       - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
     steps:
