@@ -26,18 +26,23 @@
   }
 }
 
- resource "aws_s3_bucket_object" "app" {
-   acl          = "private"
-   key          = "index.html"
-   bucket       = aws_s3_bucket.app.id
-   content      = file("./index.html")
-   content_type = "text/html"
- }
-
  resource "aws_s3_bucket_acl" "bucket" {
    bucket = aws_s3_bucket.app.id
    acl    = "private"
  }
+
+locals {
+  files = fileset(".", "**")
+}
+
+resource "aws_s3_object" "app" {
+  for_each = { for file in local.files : file => file }
+
+  key          = "index.html"
+  bucket       = aws_s3_bucket.app.id
+  content      = file("./index.html")
+  content_type = "text/html"
+}
 
  resource "aws_s3_bucket_website_configuration" "terramino" {
    bucket = aws_s3_bucket.app.bucket
