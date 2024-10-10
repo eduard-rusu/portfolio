@@ -38,10 +38,9 @@ locals {
 resource "aws_s3_object" "app" {
   for_each = { for file in local.files : file => file }
 
-  key          = "index.html"
+  key          = "${each.value}"
   bucket       = aws_s3_bucket.app.id
-  content      = file("./index.html")
-  content_type = "text/html"
+  source       = "./dist/${each.value}"
 }
 
  resource "aws_s3_bucket_website_configuration" "terramino" {
