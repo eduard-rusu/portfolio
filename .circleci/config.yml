@@ -20,21 +20,21 @@ jobs:
           paths:
             - .
 
-    build:
-      docker:
-        - image: cimg/node:22.9.0
-      steps:
-        - attach_workspace:
-            at: .
-        - run:
-            name: build
-            command: |
-              npm install
-              npm run build
-        - persist_to_workspace:
-            root: .
-            paths:
-              - ./dist
+  build:
+    docker:
+      - image: cimg/node:22.9.0
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: build
+          command: |
+            npm install
+            npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./dist
 
 
   apply:
