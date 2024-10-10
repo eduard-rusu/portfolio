@@ -20,6 +20,26 @@ jobs:
           paths:
             - .
 
+  build:
+    docker:
+      - image: cimg/node:22.9.0
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: build
+          command: |
+            npm install
+            npm run build
+      - run:
+          name: delete node_modules folder
+          command: |
+            rm -rf ./node_modules
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
   apply:
     docker:
       - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
@@ -60,15 +80,19 @@ jobs:
           name: terraform destroy
           command: |
             terraform apply -auto-approve tfdestroy
+
 workflows:
   version: 2
   plan_approve_apply:
     jobs:
       - plan-apply
+      - build:
+          requires:
+            - plan-apply
       - hold-apply:
           type: approval
           requires:
-            - plan-apply
+            - build
       - apply:
           requires:
             - hold-apply
