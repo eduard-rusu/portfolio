@@ -20,12 +20,29 @@ jobs:
           paths:
             - .
 
+    build:
+      docker:
+        - image: cimg/node:22.9.0
+      steps:
+        - attach_workspace:
+            at: .
+        - run:
+            name: build
+            command: |
+              npm install
+              npm run build
+        - persist_to_workspace:
+            root: .
+            paths:
+              - ./dist
+
+
   apply:
     docker:
       - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
     steps:
       - attach_workspace:
-          at: .
+          at: ./dist
       - run:
           name: terraform
           command: |
