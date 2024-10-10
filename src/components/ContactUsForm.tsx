@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 function ContactUsForm() {
-    const [name, setName] = useState<string>("")
+    const [_, setName] = useState<string>("")
 
     const handleOnSubmit = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
         e.preventDefault()
