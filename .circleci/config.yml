@@ -31,6 +31,7 @@ jobs:
           command: |
             npm install
             npm run build
+      - run:
           name: delete node_modules folder
           command: |
             rm -rf ./node_modules
@@ -38,7 +39,6 @@ jobs:
           root: .
           paths:
             - .
-
 
   apply:
     docker:
