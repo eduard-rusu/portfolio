@@ -106,3 +106,7 @@ workflows:
       - destroy:
           requires:
             - hold-destroy
+    filters:
+      branches:
+        only:
+          - main
