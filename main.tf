@@ -32,7 +32,7 @@
  }
 
 locals {
-  files = fileset(".", "**")
+  files = fileset("./dist", "**")
 }
 
 resource "aws_s3_object" "app" {

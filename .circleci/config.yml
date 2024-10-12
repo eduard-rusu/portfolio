@@ -4,28 +4,12 @@
 version: 2
 
 jobs:
-  plan-apply:
-    working_directory: /tmp/project
-    docker:
-      - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
-    steps:
-      - checkout
-      - run:
-          name: terraform init & plan
-          command: |
-            terraform init -input=false
-            terraform plan -out tfapply -var-file terraform.tfvars
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
-
   build:
+    working_directory: /tmp/project
     docker:
       - image: cimg/node:22.9.0
     steps:
-      - attach_workspace:
-          at: .
+      - checkout
       - run:
           name: build
           command: |
@@ -35,6 +19,22 @@ jobs:
           name: delete node_modules folder
           command: |
             rm -rf ./node_modules
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  plan-apply:
+    docker:
+      - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: terraform init & plan
+          command: |
+            terraform init -input=false
+            terraform plan -out tfapply -var-file terraform.tfvars
       - persist_to_workspace:
           root: .
           paths:
@@ -85,14 +85,14 @@ workflows:
   version: 2
   plan_approve_apply:
     jobs:
-      - plan-apply
-      - build:
-          requires:
-            - plan-apply
+      - build 
+      - plan-apply:
+           requires:
+            - build
       - hold-apply:
           type: approval
           requires:
-            - build
+            - plan-apply
       - apply:
           requires:
             - hold-apply
@@ -106,3 +106,7 @@ workflows:
       - destroy:
           requires:
             - hold-destroy
+    filters:
+      branches:
+        only:
+          - main
